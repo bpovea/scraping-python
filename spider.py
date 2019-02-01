@@ -15,7 +15,16 @@ class Pregunta(Item):
 
 class StackOverflowSpider(Spider):
     name = "Spider"
-    start_urls = ['https://es.stackoverflow.com/']
+    # start_urls = ['https://es.stackoverflow.com/']
+    
+    def __init__(self, tab=None, tags=None, *args, **kwargs):
+        super(StackOverflowSpider, self).__init__(*args, **kwargs)
+        if tab:
+            self.start_urls = ['https://es.stackoverflow.com/?tab=%s' % tab]
+        elif tags:
+            self.start_urls = ['https://es.stackoverflow.com/?tags=%s' % tags]
+        else:
+            self.start_urls = ['https://es.stackoverflow.com/']
 
     def parse(self,response):
         sel = Selector(response)
